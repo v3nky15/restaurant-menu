@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant QR Menu</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f7f3ee;
+      color: #2b2b2b;
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .restaurant-info {
+      background: white;
+      max-width: 950px;
+      margin: -35px auto 25px;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      text-align: center;
+    }
+
+    .restaurant-info strong {
+      display: block;
+      color: #9b3d12;
+      margin-bottom: 4px;
+    }
+
+    .menu-wrapper {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+    }
+
+    .category-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    .category-tabs a {
+      text-decoration: none;
+      background: #fff;
+      color: #9b3d12;
+      border: 1px solid #e0c7b8;
+      padding: 10px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .category-tabs a:hover {
+      background: #9b3d12;
+      color: white;
+    }
+
+    .menu-section {
+      margin-bottom: 35px;
+    }
+
+    .section-title {
+      font-size: 26px;
+      color: #2b2b2b;
+      margin-bottom: 15px;
+      border-left: 5px solid #9b3d12;
+      padding-left: 12px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+    }
+
+    .menu-card-content {
+      padding: 16px;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .item-header h3 {
+      font-size: 18px;
+      color: #1f1f1f;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #9b3d12;
+      white-space: nowrap;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      background: #f2e5dc;
+      color: #7a2f0e;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .order-box {
+      background: #2b2b2b;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      border-radius: 18px;
+      margin-top: 30px;
+    }
+
+    .order-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .order-box p {
+      margin-bottom: 18px;
+      color: #ddd;
+    }
+
+    .order-button {
+      display: inline-block;
+      background: #f4b23c;
+      color: #1f1f1f;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 20px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 55px 18px;
+      }
+
+      header h1 {
+        font-size: 30px;
+      }
+
+      .restaurant-info {
+        grid-template-columns: 1fr;
+        margin: -25px 20px 25px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-card img {
+        height: 190px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Spice Garden Restaurant</h1>
+    <p>Fresh flavors, signature dishes, and a simple QR menu experience for every customer.</p>
+  </header>
+
+  <section class="restaurant-info">
+    <div>
+      <strong>Open Hours</strong>
+      11:00 AM - 10:00 PM
+    </div>
+    <div>
+      <strong>Location</strong>
+      123 Main Street, Dallas, TX
+    </div>
+    <div>
+      <strong>Call</strong>
+      (123) 456-7890
+    </div>
+  </section>
+
+  <main class="menu-wrapper">
+    <nav class="category-tabs">
+      <a href="#starters">Starters</a>
+      <a href="#main-course">Main Course</a>
+      <a href="#drinks">Drinks</a>
+      <a href="#desserts">Desserts</a>
+    </nav>
+
+    <section id="starters" class="menu-section">
+      <h2 class="section-title">Starters</h2>
+      <div class="menu-grid">
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80" alt="Crispy Samosa" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Crispy Samosa</h3>
+              <span class="price">$5.99</span>
+            </div>
+            <p class="description">Golden fried pastry filled with spiced potatoes and peas.</p>
+            <div class="tags">
+              <span class="tag">Vegetarian</span>
+              <span class="tag">Popular</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=900&q=80" alt="Chicken Wings" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Spicy Chicken Wings</h3>
+              <span class="price">$8.99</span>
+            </div>
+            <p class="description">Crispy wings tossed in house special spicy sauce.</p>
+            <div class="tags">
+              <span class="tag">Spicy</span>
+              <span class="tag">Chef Special</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="main-course" class="menu-section">
+      <h2 class="section-title">Main Course</h2>
+      <div class="menu-grid">
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=900&q=80" alt="Chicken Biryani" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Chicken Biryani</h3>
+              <span class="price">$14.99</span>
+            </div>
+            <p class="description">Aromatic basmati rice cooked with tender chicken and spices.</p>
+            <div class="tags">
+              <span class="tag">Popular</span>
+              <span class="tag">Spicy</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=900&q=80" alt="Butter Paneer" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Butter Paneer</h3>
+              <span class="price">$12.99</span>
+            </div>
+            <p class="description">Soft paneer cubes cooked in creamy tomato butter sauce.</p>
+            <div class="tags">
+              <span class="tag">Vegetarian</span>
+              <span class="tag">Creamy</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="drinks" class="menu-section">
+      <h2 class="section-title">Drinks</h2>
+      <div class="menu-grid">
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80" alt="Mango Lassi" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Mango Lassi</h3>
+              <span class="price">$4.99</span>
+            </div>
+            <p class="description">Refreshing yogurt drink blended with sweet mango.</p>
+            <div class="tags">
+              <span class="tag">Cold</span>
+              <span class="tag">Sweet</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80" alt="Fresh Lemonade" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Fresh Lemonade</h3>
+              <span class="price">$3.99</span>
+            </div>
+            <p class="description">House-made lemonade with fresh mint and citrus.</p>
+            <div class="tags">
+              <span class="tag">Fresh</span>
+              <span class="tag">Vegan</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="desserts" class="menu-section">
+      <h2 class="section-title">Desserts</h2>
+      <div class="menu-grid">
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=80" alt="Ice Cream" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Vanilla Ice Cream</h3>
+              <span class="price">$4.99</span>
+            </div>
+            <p class="description">Classic vanilla ice cream served with chocolate drizzle.</p>
+            <div class="tags">
+              <span class="tag">Sweet</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80" alt="Chocolate Cake" />
+          <div class="menu-card-content">
+            <div class="item-header">
+              <h3>Chocolate Cake</h3>
+              <span class="price">$6.99</span>
+            </div>
+            <p class="description">Rich chocolate cake layered with creamy frosting.</p>
+            <div class="tags">
+              <span class="tag">Best Seller</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="order-box">
+      <h2>Ready to Order?</h2>
+      <p>Please call us or show this menu to your server.</p>
+      <a class="order-button" href="tel:1234567890">Call to Order</a>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Spice Garden Restaurant. All rights reserved.
+  </footer>
+</body>
+</html>
